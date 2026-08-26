@@ -1,0 +1,29 @@
+[
+  {
+    "event": "Partido igualado - mercado eficiente",
+    "selections": ["Local", "Visitante"],
+    "prices": {
+      "pinnacle": [1.95, 1.95],
+      "casa_a": [1.90, 1.92],
+      "casa_b": [1.88, 1.94]
+    }
+  },
+  {
+    "event": "Casa blanda con precio desalineado",
+    "selections": ["Local", "Visitante"],
+    "prices": {
+      "pinnacle": [1.80, 2.10],
+      "casa_a": [1.75, 2.15],
+      "casa_b": [1.72, 2.35]
+    }
+  },
+  {
+    "event": "Mercado 1X2 de liga menor",
+    "selections": ["Local", "Empate", "Visitante"],
+    "prices": {
+      "pinnacle": [2.30, 3.40, 3.20],
+      "casa_a": [2.25, 3.30, 3.35],
+      "casa_b": [2.20, 3.60, 3.10]
+    }
+  }
+]

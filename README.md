@@ -19,6 +19,11 @@ todo verificado con simulación, no con afirmaciones.
 | `apuestas/edge.py` | De dónde sale la ventaja: precio vs probabilidad real, quitar el *vig* |
 | `apuestas/kelly.py` | Dimensionamiento correcto **cuando existe ventaja** |
 | `apuestas/wheel_bias.py` | El único camino +EV real en ruleta: detectar una rueda sesgada |
+| `apuestas/value.py` | **Detector de valor:** cuotas reales → sin comisión → EV → apuesta |
+| `apuestas/tracker.py` | **Registro histórico** y validación estadística de la ventaja |
+| `apuestas/clv_power.py` | Por qué el CLV detecta la ventaja ~128x antes que el beneficio |
+
+Ver [`docs/DETECCION_DE_VALOR.md`](docs/DETECCION_DE_VALOR.md) para el flujo completo.
 
 ```bash
 python3 -m pytest tests/ -q
@@ -26,6 +31,14 @@ python3 -m roulette_fibonacci.ev_proof          # el teorema, empíricamente
 python3 -m roulette_fibonacci.campaign          # el plan "+1u por sesión", medido
 python3 -m apuestas.kelly --p 0.55 --odds 2.0   # crecimiento compuesto con ventaja real
 python3 -m apuestas.wheel_bias                  # cuántos giros para probar un sesgo
+
+# Flujo de detección de valor
+python3 -m apuestas.value examples/mercados.json --reference pinnacle --min-ev 0.02
+python3 -m apuestas.tracker add --event "..." --selection "..." --book casa_b \
+    --odds 2.35 --p 0.4615 --stake 31.34
+python3 -m apuestas.tracker settle b00001 won --closing-odds 2.20
+python3 -m apuestas.tracker report
+python3 -m apuestas.clv_power                   # ROI vs CLV: velocidad de detección
 ```
 
 ---
