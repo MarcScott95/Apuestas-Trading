@@ -22,8 +22,13 @@ todo verificado con simulación, no con afirmaciones.
 | `apuestas/value.py` | **Detector de valor:** cuotas reales → sin comisión → EV → apuesta |
 | `apuestas/tracker.py` | **Registro histórico** y validación estadística de la ventaja |
 | `apuestas/clv_power.py` | Por qué el CLV detecta la ventaja ~128x antes que el beneficio |
+| `trading/backtest.py` | Motor de backtest sin *lookahead*, con costes reales |
+| `trading/strategies.py` | Media móvil (SMA) y RSI, las reglas técnicas de libro |
+| `trading/validation.py` | Validación fuera de muestra: ¿ventaja real o sobreajuste? |
+| `trading/martingale_demo.py` | Por qué Martingala en trading es peor que en ruleta (dato real: QQQ 2022) |
 
-Ver [`docs/DETECCION_DE_VALOR.md`](docs/DETECCION_DE_VALOR.md) para el flujo completo.
+Ver [`docs/DETECCION_DE_VALOR.md`](docs/DETECCION_DE_VALOR.md) (apuestas deportivas)
+y [`docs/DAY_TRADING.md`](docs/DAY_TRADING.md) (day trading, con datos reales de mercado).
 
 ```bash
 python3 -m pytest tests/ -q
@@ -39,6 +44,12 @@ python3 -m apuestas.tracker add --event "..." --selection "..." --book casa_b \
 python3 -m apuestas.tracker settle b00001 won --closing-odds 2.20
 python3 -m apuestas.tracker report
 python3 -m apuestas.clv_power                   # ROI vs CLV: velocidad de detección
+
+# Day trading
+python3 -m trading.validation SPY sma           # media movil validada fuera de muestra
+python3 -m trading.validation AAPL rsi
+python3 -m trading.martingale_demo --symbol QQQ --start 2021-11-19 --end 2022-10-13 \
+    --initial-position 5 --add-on-drop 0.03     # Martingala contra un mercado bajista real
 ```
 
 ---
