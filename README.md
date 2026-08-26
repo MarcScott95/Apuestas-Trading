@@ -1,6 +1,38 @@
-# Fibonacci acotada para apuestas simples de ruleta
+# Apuestas-Trading
 
-Implementación y simulación de la estrategia que describiste: apostar a chances
+Análisis cuantitativo de estrategias de apuesta: qué funciona, qué no, y por qué —
+todo verificado con simulación, no con afirmaciones.
+
+> **📄 Empieza por [`docs/ESTRATEGIA_ESPERANZA_POSITIVA.md`](docs/ESTRATEGIA_ESPERANZA_POSITIVA.md)**
+> — el razonamiento completo: por qué ninguna progresión puede dar esperanza
+> positiva (con demostración), y cuál es la estructura que sí la da (criterio de
+> Kelly sobre una ventaja real), incluyendo cómo validar que esa ventaja existe.
+
+## Contenido
+
+| Módulo | Qué hace |
+|---|---|
+| `roulette_fibonacci/strategy.py` | Fibonacci acotada a 6 pasos (ver abajo) |
+| `roulette_fibonacci/labouchere.py` | Sistema de cancelación: objetivo +1 unidad por sesión |
+| `roulette_fibonacci/campaign.py` | Simula acumular +1u por sesión con límite de mesa y banca |
+| `roulette_fibonacci/ev_proof.py` | Demuestra que 6 sistemas distintos convergen al mismo −2.7% |
+| `apuestas/edge.py` | De dónde sale la ventaja: precio vs probabilidad real, quitar el *vig* |
+| `apuestas/kelly.py` | Dimensionamiento correcto **cuando existe ventaja** |
+| `apuestas/wheel_bias.py` | El único camino +EV real en ruleta: detectar una rueda sesgada |
+
+```bash
+python3 -m pytest tests/ -q
+python3 -m roulette_fibonacci.ev_proof          # el teorema, empíricamente
+python3 -m roulette_fibonacci.campaign          # el plan "+1u por sesión", medido
+python3 -m apuestas.kelly --p 0.55 --odds 2.0   # crecimiento compuesto con ventaja real
+python3 -m apuestas.wheel_bias                  # cuántos giros para probar un sesgo
+```
+
+---
+
+## Fibonacci acotada para apuestas simples de ruleta
+
+Implementación y simulación de la primera estrategia planteada: apostar a chances
 simples (rojo/negro, par/impar, 1-18/19-36 — pagan 1 a 1, tu apuesta se
 duplica si aciertas) usando la secuencia de Fibonacci en lugar de Martingala,
 con el avance **tope en 6 pérdidas** para no dejar crecer la apuesta sin
